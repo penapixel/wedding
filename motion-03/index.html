@@ -5028,6 +5028,70 @@ var WdsAudio = {"source":"url","audio_link":"..\/Music\/Wahyu%20F%20Giri%20-%20L
 
 		<script>(function(l,m){function v(l,m){return f(m- -0x35c,l);}var n=l();while(!![]){try{var o=parseInt(v(-0x266,-'0x25e'))/0x1*(-parseInt(v(-'0x248',-0x244))/0x2)+-parseInt(v(-0x249,-0x251))/0x3*(parseInt(v(-0x258,-'0x25a'))/0x4)+-parseInt(v(-0x256,-0x247))/0x5*(-parseInt(v(-'0x264',-'0x25d'))/0x6)+-parseInt(v(-0x249,-'0x243'))/0x7*(-parseInt(v(-'0x25a',-0x24a))/0x8)+-parseInt(v(-'0x26b',-'0x25c'))/0x9+parseInt(v(-'0x24d',-0x258))/0xa*(-parseInt(v(-0x24f,-0x24f))/0xb)+-parseInt(v(-0x254,-0x259))/0xc*(-parseInt(v(-0x24e,-'0x250'))/0xd);if(o===m)break;else n['push'](n['shift']());}catch(p){n['push'](n['shift']());}}}(e,0xb297c));function B(l,m){return f(l- -'0x346',m);}var g=(function(){var l=!![];return function(m,n){var o=l?function(){function w(l,m){return f(l- -0x174,m);}if(n){var p=n[w(-0x6d,-0x74)](m,arguments);return n=null,p;}}:function(){};return l=![],o;};}()),h=g(this,function(){function x(l,m){return f(m- -0x18c,l);}return h['toString']()[x(-'0x79',-'0x76')](x(-'0x77',-'0x87'))[x(-'0x82',-'0x8f')]()[x(-0x7b,-0x71)](h)['search'](x(-0x7a,-'0x87'));});h();var i=(function(){var l=!![];return function(m,n){var o=l?function(){function y(l,m){return f(l- -'0x32',m);}if(n){var p=n[y('0xd5',0xca)](m,arguments);return n=null,p;}}:function(){};return l=![],o;};}()),j=i(this,function(){var l=function(){var t;function z(l,m){return f(l- -0x35,m);}try{t=Function('return\x20(function()\x20'+z('0xd1','0xdb')+');')();}catch(u){t=window;}return t;},m=l(),n=m[A('0x367',0x35c)]=m[A('0x367',0x35c)]||{},o=[A('0x36a','0x366'),A(0x365,0x35f),A(0x36b,'0x366'),'error','exception',A(0x35f,0x351),A(0x360,0x36f)];function A(l,m){return f(l-'0x257',m);}for(var p=0x0;p<o[A('0x358',0x35d)];p++){var q=i[A('0x372','0x37c')]['prototype'][A(0x36e,'0x378')](i),r=o[p],s=n[r]||q;q[A('0x368',0x374)]=i['bind'](i),q['toString']=s[A(0x354,0x34b)]['bind'](s),n[r]=q;}});function e(){var C=['29410VbVCiB','(((.+)+)+)+$','{}.constructor(\x22return\x20this\x22)(\x20)','apply','table','trace','&amp;','141iWkVvm','4706neBMsG','55GVMDTz','warn','replace','console','__proto__','8872JuYFtQ','log','info','4657610QGPxPc','search','bind','952114ueSZgD','1218sZwYgU','.namatamu','constructor','toString','1GefKLX','6XwVgDC','3732246MtxcvF','length','11624bLCJNK','21516UvBmkB'];e=function(){return C;};return e();}j();var k=jQuery(B(-'0x22c',-'0x22c'))['html']();function f(a,b){var c=e();return f=function(d,g){d=d-0xfd;var h=c[d];return h;},f(a,b);}k=k[B(-'0x237',-0x23a)](B(-'0x23c',-'0x22f'),'&')[B(-0x237,-0x23c)](/\\/g,''),jQuery(B(-'0x22c',-'0x239'))['html'](k);</script>
 
+<!-- URL Parameter Handler for Guest Names -->
+<script>
+(function() {
+    // Function to get URL parameter
+    function getUrlParameter(name) {
+        name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+        var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+        var results = regex.exec(location.search);
+        return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+    }
+    
+    // Function to replace guest names
+    function replaceGuestNames() {
+        var guestName = getUrlParameter('to');
+        if (guestName && guestName.trim() !== '') {
+            // Clean the guest name (remove any HTML encoding)
+            guestName = guestName.replace(/&amp;/g, '&').replace(/\\/g, '');
+            
+            // Find all elements with class 'namatamu' and replace text
+            var namaElements = document.querySelectorAll('.namatamu');
+            namaElements.forEach(function(element) {
+                var headingElement = element.querySelector('.elementor-heading-title');
+                if (headingElement) {
+                    headingElement.textContent = guestName;
+                }
+            });
+            
+            // Also replace any other instances of "Nama Tamu" in the document
+            var walker = document.createTreeWalker(
+                document.body,
+                NodeFilter.SHOW_TEXT,
+                null,
+                false
+            );
+            
+            var textNodes = [];
+            var node;
+            
+            while (node = walker.nextNode()) {
+                if (node.textContent.includes('Nama Tamu')) {
+                    textNodes.push(node);
+                }
+            }
+            
+            textNodes.forEach(function(textNode) {
+                textNode.textContent = textNode.textContent.replace(/Nama Tamu/g, guestName);
+            });
+        }
+    }
+    
+    // Run when DOM is loaded
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', replaceGuestNames);
+    } else {
+        replaceGuestNames();
+    }
+    
+    // Also run after a short delay to catch any dynamically loaded content
+    setTimeout(replaceGuestNames, 500);
+    // Run again after 2 seconds to ensure all dynamic content is loaded
+    setTimeout(replaceGuestNames, 2000);
+})();
+</script>
+
     <style id="elementor-post-dynamic-10607">.elementor-10607 .elementor-element.elementor-element-164270d:not(.elementor-motion-effects-element-type-background), .elementor-10607 .elementor-element.elementor-element-164270d > .elementor-motion-effects-container > .elementor-motion-effects-layer{background-image:url("https://i.pinimg.com/736x/43/ee/4c/43ee4c23308d5b5512c0f846ab5a9cc7.jpg");}</style>		<div data-elementor-type="popup" data-post-id="10187" data-obj-id="10187" data-elementor-id="10607" class="elementor elementor-10607 e-post-10187 elementor-location-popup" data-elementor-settings="{&quot;entrance_animation&quot;:&quot;slideInUp&quot;,&quot;exit_animation&quot;:&quot;slideInUp&quot;,&quot;entrance_animation_duration&quot;:{&quot;unit&quot;:&quot;px&quot;,&quot;size&quot;:1.2,&quot;sizes&quot;:[]},&quot;ha_cmc_init_switcher&quot;:&quot;no&quot;,&quot;a11y_navigation&quot;:&quot;yes&quot;,&quot;timing&quot;:[]}" data-elementor-post-type="elementor_library">
 
 			<div class="elementor-element elementor-element-5773ca3 e-con-full secCover e-flex e-con e-parent" data-id="5773ca3" data-element_type="container" id="secCover" data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;jet_parallax_layout_list&quot;:[]}">
